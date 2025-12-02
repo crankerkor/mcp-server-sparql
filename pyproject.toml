@@ -1,5 +1,5 @@
 [project]
-name = "mcp-server-sparql"
+name = "mcp-server-sparql-cert"
 version = "0.1.0"
 description = "MCP server for querying SPARQL endpoint"
 license = { text = "MIT" }
