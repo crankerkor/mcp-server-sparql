@@ -1,16 +1,23 @@
 import json
 import argparse
 from typing import Dict, Any, Optional, Union, List
+import ssl
+import urllib3
 
 from SPARQLWrapper import SPARQLWrapper, JSON, SPARQLExceptions
 from mcp.server.fastmcp import FastMCP
 
+# Disable SSL verification warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class SPARQLServer:
     def __init__(self, endpoint_url: str):
         self.endpoint_url = endpoint_url
         self.sparql = SPARQLWrapper(endpoint_url)
         self.sparql.setReturnFormat(JSON)
+        
+        # Disable SSL certificate verification
+        self.sparql.agent.ssl_context = ssl._create_unverified_context()
     
     def query(self, query_string: str) -> Dict[str, Any]:
         """Execute a SPARQL query and return the results"""
